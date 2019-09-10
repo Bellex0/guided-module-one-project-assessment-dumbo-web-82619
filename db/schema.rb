@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_143659) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "brand"
+    t.integer "company_id"
     t.string "category"
     t.string "rating"
   end

@@ -19,9 +19,15 @@ class Company < ActiveRecord::Base
 
     def list_product
         name = Company.tty_prompt.ask("What's the name of the product?")
-        new_pro = Product.create(name: name , brand: self.name, category: self.category)
-        binding.pry
+        new_pro = Product.create(name: name , company_id: self.id, category: self.category)
+        puts new_pro
+        return new_pro
+        # binding.pry
     end
+
+    def edit_product
+        # new_pro = self.products.
+    end 
 
 
 

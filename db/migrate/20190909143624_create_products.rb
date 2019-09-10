@@ -2,7 +2,7 @@ class CreateProducts < ActiveRecord::Migration[5.2]
   def change
     create_table :products do |t|
     t.string :name
-    t.string :brand
+    t.integer :company_id
     t.string :category
     t.string :rating
     end
