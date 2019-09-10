@@ -1,17 +1,23 @@
 require_relative '../config/environment'
 
-puts "hello world"
+# puts "hello world"
 
 cli = Interface.new
 
-user_object = cli.welcome
+# user_object = 
+cli.welcome
 
-# cli.company = user_object
-puts user_object
-# puts user_object.name
+# while user_object == nil
+#     user_object = cli.welcome
+# end
 
-action = cli.review_or_trial
-puts action
+# if user_object.class == Customer 
+#     cli.customer = user_object
+# else
+#     cli.company = user_object
+# end
+
+cli.main_menu
 
 binding.pry
 0
