@@ -66,10 +66,12 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 5.2.3)
   faker
+  pastel
   pry
   require_all
   sinatra-activerecord
   sqlite3
+  tty-color
   tty-prompt
 
 BUNDLED WITH
