@@ -97,8 +97,10 @@ class Customer < ActiveRecord::Base
             puts "You do not have any current trials."
             sleep 5
         else   
+            # puts self.trials 
             cur_trials_products = self.trials.map{|trial|Product.find(trial.product_id)}
             
+            # binding.pry
 
             pro_hash = {}
             cur_trials_products.each do |product|

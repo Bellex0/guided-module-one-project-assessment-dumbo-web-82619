@@ -91,7 +91,6 @@ class Interface
                 when "Request a new product trial"
                     self.customer.request_new_trial
                     self.main_menu
-
                 when "Review a product"
                     self.customer.review_a_product
                     self.main_menu
