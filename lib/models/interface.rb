@@ -85,7 +85,9 @@ class Interface
                     menu.choice "Exit"
                 end
 
+
                 case choice   
+                # if you request a trial, then view your trials, it is NOT there!!!
                 when "Request a new product trial"
                     self.customer.request_new_trial
                     self.main_menu
