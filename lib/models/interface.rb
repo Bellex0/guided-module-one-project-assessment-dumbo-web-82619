@@ -4,13 +4,22 @@ class Interface
     attr_accessor :customer, :company, :product, :trial, :path
 
     def initialize()
-        @prompt = TTY::Prompt.new
+        @prompt = TTY::Prompt.new(active_color: :magenta)
+        # @pastel = Pastel.new
+        # @font = TTY::Font.new(:straight)
+        # @spinner = TTY::Spinner.new
     end
+
 
     def welcome
         system "clear"
-        puts "Hey! Welcome to Sample Hamper! Try out new and best-selling products without the commitment! 🙌"
-        choice = self.prompt.select("Customer or Company?") do |menu|
+        pastel = Pastel.new
+        font = TTY::Font.new(:straight)
+        puts "Hey! Welcome to " + "\n" + pastel.cyan(font.write("Trial   Wile!"))
+        
+        puts "Try out new and best-selling products without the commitment! 🙌".colorize(:light_magenta)
+        
+        choice = self.prompt.select("Customer or Company?", active_color: :magenta) do |menu|
             menu.choice "Customer"
             menu.choice "Company"
         end 
@@ -32,18 +41,20 @@ class Interface
                 case choice3
                 when "Sign Up"
                     self.customer = Customer.handle_new_customer
+                    self.main_menu
                 when "Exit"  
                     self.welcome  
                 end
                 
             when "Returning Customer"
-                choice3 = self.prompt.select("Log in here,stranger") do |menu|
+                choice3 = self.prompt.select("Log in,stranger 🌻") do |menu|
                     menu.choice "Log In"
                     menu.choice "Exit"
                 end 
                 case choice3
                 when "Log In"
                     self.customer = Customer.handle_returning_customer
+                    self.main_menu
                 when "Exit"  
                     self.welcome  
                 end
@@ -62,8 +73,10 @@ class Interface
             case choice2
             when "New Company"
                 self.company = Company.handle_new_company
+                self.main_menu
             when "Returning Company"
                 self.company = Company.handle_returning_company
+                self.main_menu
             when "Exit"
                 self.welcome
             end 
@@ -77,24 +90,22 @@ class Interface
     def main_menu
             system "clear"
             if @path == "Customer"
-                choice = self.prompt.select("What's good for today? ") do |menu|
+                choice = self.prompt.select("What's good for today?🌟") do |menu|
                     menu.choice "Request a new product trial"
                     menu.choice "Review a product"
                     menu.choice "Cancel a product trial"
                     menu.choice "View your trials"
                     menu.choice "Exit"
                 end
-
-
                 case choice   
-                # if you request a trial, then view your trials, it is NOT there!!!
+                
                 when "Request a new product trial"
+                    # binding.pry
                     self.customer.request_new_trial
                     self.main_menu
                 when "Review a product"
                     self.customer.review_a_product
                     self.main_menu
-
                 when "Cancel a product trial"
                     self.customer.cancel_a_trial
                     self.main_menu
@@ -105,9 +116,11 @@ class Interface
                 when "Exit"
                     self.welcome
                 end
-            elsif @path == "Company"
-                choice = self.prompt.select("What's your task for today?") do |menu|
+            elsif 
+                @path == "Company"
+                choice = self.prompt.select("What's your task for today?🌟") do |menu|
                     menu.choice "List a new product"
+                    menu.choice "Remove a product (Testing now)"
                     menu.choice "See all your current products"
                     menu.choice "Update a listing"
                     menu.choice "Exit"
@@ -116,8 +129,9 @@ class Interface
             case choice 
             when "List a new product"
                 self.company.list_product
-                puts "Your listing has been added."
-                sleep 5
+                self.main_menu
+            when "Remove a product (Testing now)"
+                self.company.remove_product
                 self.main_menu
             when "See all your current products"
                 self.company.see_cur_products

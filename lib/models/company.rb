@@ -14,6 +14,7 @@ class Company < ActiveRecord::Base
     end
 
     def self.handle_returning_company
+        # binding.pry
         name = self.tty_prompt.ask("Welcome Back! What's your company name?")
         Company.find_by(name: name)
     end
@@ -21,9 +22,12 @@ class Company < ActiveRecord::Base
     def list_product
         name = Company.tty_prompt.ask("What's the name of the product?")
         new_pro = Product.create(name: name , company_id: self.id, category: self.category)
-        # puts new_pro
-        # return new_pro
-        # binding.pry
+
+        spinner = TTY::Spinner.new("[:spinner] Work in progress ...", format: :pulse_2)
+        spinner.auto_spin
+        sleep(2)
+        spinner.stop('Thank you. Your product has been listed. 🤗') 
+        sleep 3
     end
 
     def cur_products_names
@@ -31,18 +35,18 @@ class Company < ActiveRecord::Base
     end 
 
     def cur_products_ids
-        self.products.map {|product| product.id}
+        self.reload.products.map {|product| product.id}
     end 
 
     def see_cur_products
-        if self.products.size == 0
+        # binding.pry
+        if self.reload.products.size == 0
             puts "You do not have any listings at this time."
-            sleep 5
+                sleep 5
         else
             products_instances = cur_products_ids.map do |id|
                 Product.find(id)
             end 
-            # binding.pry
             pro_hash = {}
             products_instances.each do |product|
                 pro_hash["#{product.name}"] = product  
@@ -56,7 +60,7 @@ class Company < ActiveRecord::Base
     end 
 
     def update_a_list
-        if self.products.size == 0
+        if self.reload.products.size == 0
             puts "You do not have any listings at this time."
             sleep 5
         else 
@@ -87,17 +91,42 @@ class Company < ActiveRecord::Base
             # self.reload
             # binding.pry
         end 
-
-        # product_choice = Company.tty_prompt.select("Products", self.)
-
         
     end 
-    
 
     def cur_products_trials
-        my_products_trials = self.products.map {|product| Trial.find_by(product_id: product.id)}.select {|trial| trial.nil? != true}
+        my_products_trials = self.reload.products.map {|product| Trial.find_by(product_id: product.id)}.select {|trial| trial.nil? != true}
     end 
         
+    def remove_product
+        if self.reload.products.size == 0
+            puts "You do not have any listings at this time."
+                sleep 5
+        else
+            products_instances = cur_products_ids.map do |id|
+                Product.find(id)
+            end 
+
+            pro_hash = {}
+            products_instances.each do |product|
+                pro_hash["#{product.name}"] = product  
+            end 
+
+            product_choice = Company.tty_prompt.select("Which product do you want to remove?", pro_hash)
+            
+            Product.destroy(product_choice.id)
+            # when you destroy a product, you also need to destroy all the related trials of it.
+            Trial.destroy(Trial.find_by(product_id: product_choice.id))
+            
+            bar = TTY::ProgressBar.new("Deleting.. [:bar]", total: 30)
+            30.times do
+                sleep(0.1)
+                bar.advance(1)
+            end 
+            puts "This trial has been deleted."
+            sleep 3
+        end 
+    end 
 
 
 

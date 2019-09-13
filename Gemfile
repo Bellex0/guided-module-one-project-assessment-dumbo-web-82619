@@ -11,5 +11,9 @@ gem "faker"
 gem "tty-prompt"
 gem 'tty-color'
 gem 'pastel'
+gem 'colorize'
+gem 'tty-font'
+gem 'tty-progressbar'
+gem 'tty-spinner'
 
 
