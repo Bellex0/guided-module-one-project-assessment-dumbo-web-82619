@@ -91,55 +91,55 @@ class Interface
             system "clear"
             if @path == "Customer"
                 choice = self.prompt.select("What's good for today?🌟") do |menu|
-                    menu.choice "Request a new product trial"
-                    menu.choice "Review a product"
-                    menu.choice "Cancel a product trial"
-                    menu.choice "View your trials"
-                    menu.choice "Exit"
+                    menu.choice "🎁  Request a new product trial"
+                    menu.choice "📝  Review a product"
+                    menu.choice "❌  Cancel a product trial"
+                    menu.choice "👀  View your trials"
+                    menu.choice "✌️  Exit"
                 end
                 case choice   
                 
-                when "Request a new product trial"
+                when "🎁  Request a new product trial"
                     # binding.pry
                     self.customer.request_new_trial
                     self.main_menu
-                when "Review a product"
+                when "📝  Review a product"
                     self.customer.review_a_product
                     self.main_menu
-                when "Cancel a product trial"
+                when "❌  Cancel a product trial"
                     self.customer.cancel_a_trial
                     self.main_menu
-                when "View your trials"
+                when "👀  View your trials"
                     self.customer.view_your_trials
                     sleep 5
                     self.main_menu
-                when "Exit"
+                when "✌️  Exit"
                     self.welcome
                 end
             elsif 
                 @path == "Company"
                 choice = self.prompt.select("What's your task for today?🌟") do |menu|
-                    menu.choice "List a new product"
-                    menu.choice "Remove a product (Testing now)"
-                    menu.choice "See all your current products"
-                    menu.choice "Update a listing"
-                    menu.choice "Exit"
+                    menu.choice "🔥  List a new product"
+                    menu.choice "❌  Remove a product"
+                    menu.choice "👀  See all your current products"
+                    menu.choice "✏️  Update a listing"
+                    menu.choice "✌️  Exit"
                 end 
             end
             case choice 
-            when "List a new product"
+            when "🔥  List a new product"
                 self.company.list_product
                 self.main_menu
-            when "Remove a product (Testing now)"
+            when "❌  Remove a product"
                 self.company.remove_product
                 self.main_menu
-            when "See all your current products"
+            when "👀  See all your current products"
                 self.company.see_cur_products
                 self.main_menu
-            when "Update a listing"
+            when "✏️  Update a listing"
                 self.company.update_a_list
                 self.main_menu
-            when "Exit"
+            when "✌️  Exit"
                 self.welcome
             end
     end

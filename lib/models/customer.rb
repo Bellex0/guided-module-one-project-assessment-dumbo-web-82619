@@ -18,7 +18,7 @@ class Customer < ActiveRecord::Base
     end
 
     def self.handle_returning_customer
-        puts "Welcome Back! Please enter your name"
+        puts "Hello again 😺 ! Please enter your name"
         name = gets.chomp.capitalize
         # name = self.tty_prompt.ask("Welcome back! What is your name?")
         returning = Customer.find_by(name: name)
@@ -36,7 +36,7 @@ class Customer < ActiveRecord::Base
         chosen = Product.find_by(name: product_request)
         new_trial = Trial.create(customer_id: self.id, product_id: chosen.id, date: Time.now.strftime('%F'))
         # binding.pry
-        bar = TTY::ProgressBar.new("Got it. Your trial awaits... [:bar]", total: 30)
+        bar = TTY::ProgressBar.new("Got it! Your trial awaits... [:bar]", total: 30)
         30.times do
             sleep(0.1)
             bar.advance(1)
@@ -61,7 +61,7 @@ class Customer < ActiveRecord::Base
 
     def review_a_product
         if self.reload.products.size == 0
-            puts "You do not have any current trials."
+            puts "You do not have any trials to review."
             sleep 5
             # binding.pry
         else
@@ -94,7 +94,7 @@ class Customer < ActiveRecord::Base
             
             Trial.destroy(my_trial[0].id)
             
-            bar = TTY::ProgressBar.new("Deleting.. [:bar]", total: 30)
+            bar = TTY::ProgressBar.new("Bye bye 👋 ... [:bar]", total: 30)
             30.times do
                 sleep(0.1)
                 bar.advance(1)
@@ -107,7 +107,7 @@ class Customer < ActiveRecord::Base
     def view_your_trials
         # binding.pry
         if self.reload.trials.size == 0
-            puts "You do not have any current trials."
+            puts "You do not have any trials. Let's change that! Check out our current products from the main menu 🛍"
             sleep 3
         else   
             # self.reload.products
@@ -119,15 +119,20 @@ class Customer < ActiveRecord::Base
                 pro_hash["#{product.name}"] = product
             end 
 
-            product = Customer.tty_prompt.select("Trials", pro_hash)
+            product = Customer.tty_prompt.select("Here's the trials in your swag bag", pro_hash)
             the_trial = Trial.find_by(product_id: product.id)
             if the_trial.nil?
                 puts "This trial no longer exists."
             else 
                 dates = the_trial.date
-                puts product.name + ": " + dates
+                review = the_trial.review
+                if review.nil?
+                    puts product.name + ": " + dates
+                else 
+                    puts product.name + ": " + dates + "  Review: " +review
+                end 
             end
-            sleep 3
+            sleep 2
             # binding.pry
         end 
 

@@ -15,7 +15,7 @@ class Company < ActiveRecord::Base
 
     def self.handle_returning_company
         # binding.pry
-        name = self.tty_prompt.ask("Welcome Back! What's your company name?")
+        name = self.tty_prompt.ask("Hello again 😺 ! What's your company name?")
         Company.find_by(name: name)
     end
 
@@ -53,8 +53,15 @@ class Company < ActiveRecord::Base
                 # binding.pry
             end 
             product_choice = Company.tty_prompt.select("Products", pro_hash)
-            puts "Name: " + product_choice.name
-            puts "Category: " +  product_choice.category
+            if product_choice.rating.nil?
+                puts "Name: " + product_choice.name
+                puts "Category: " +  product_choice.category
+            elsif 
+                puts "Name: " + product_choice.name
+                puts "Category: " +  product_choice.category
+                puts "Rating: " + product_choice.rating
+            end 
+                # puts product.name + ": " + dates + "  Review: " +review
             sleep 4
         end 
     end 
@@ -76,17 +83,21 @@ class Company < ActiveRecord::Base
                 pro_hash["#{product.name}"] = product  
             end 
 
-            product_choice = Company.tty_prompt.select("Products", pro_hash)
+            product_choice = Company.tty_prompt.select("Your goodies", pro_hash)
 
-            name_or_cat = ["name", "category"]
-            change = Company.tty_prompt.select("What do you want to change?", name_or_cat)
+            name_or_cat = ["Name", "Category"]
+            change = Company.tty_prompt.select("Which do you want to change?", name_or_cat)
 
             update = Company.tty_prompt.ask("What do you want to change it to?")
 
             updated = product_choice.update(name: update)
 
-            puts "Your product has been updated."
+            spinner = TTY::Spinner.new("[:spinner] Work in progress ...", format: :pulse_2)
+            spinner.auto_spin
+            sleep(2)
+            spinner.stop('Thank you. Your product has been updated. 🤗') 
             sleep 3
+
             return updated
             # self.reload
             # binding.pry
@@ -116,14 +127,17 @@ class Company < ActiveRecord::Base
             
             Product.destroy(product_choice.id)
             # when you destroy a product, you also need to destroy all the related trials of it.
-            Trial.destroy(Trial.find_by(product_id: product_choice.id))
+            if product_choice.trials.size != 0
+                # binding.pry
+                Trial.destroy(Trial.find_by(product_id: product_choice.id))
+            end 
             
-            bar = TTY::ProgressBar.new("Deleting.. [:bar]", total: 30)
+            bar = TTY::ProgressBar.new("Bye bye 👋 .. [:bar]", total: 30)
             30.times do
                 sleep(0.1)
                 bar.advance(1)
             end 
-            puts "This trial has been deleted."
+            puts "This product and its related trials have been deleted."
             sleep 3
         end 
     end 
