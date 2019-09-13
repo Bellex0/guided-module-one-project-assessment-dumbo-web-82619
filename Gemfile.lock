@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+<<<<<<< HEAD
     activemodel (5.2.3)
       activesupport (= 5.2.3)
     activerecord (5.2.3)
@@ -8,14 +9,28 @@ GEM
       activesupport (= 5.2.3)
       arel (>= 9.0)
     activesupport (5.2.3)
+=======
+    activemodel (6.0.0)
+      activesupport (= 6.0.0)
+    activerecord (6.0.0)
+      activemodel (= 6.0.0)
+      activesupport (= 6.0.0)
+    activesupport (6.0.0)
+>>>>>>> 5754448a407cb123acecdeee136069145bab607d
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+<<<<<<< HEAD
     arel (9.0.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     equatable (0.6.1)
+=======
+      zeitwerk (~> 2.1, >= 2.1.8)
+    coderay (1.1.2)
+    concurrent-ruby (1.1.5)
+>>>>>>> 5754448a407cb123acecdeee136069145bab607d
     faker (2.2.2)
       i18n (~> 1.6.0)
     i18n (1.6.0)
@@ -23,10 +38,13 @@ GEM
     method_source (0.9.2)
     minitest (5.11.3)
     mustermann (1.0.3)
+<<<<<<< HEAD
     necromancer (0.5.0)
     pastel (0.7.3)
       equatable (~> 0.6)
       tty-color (~> 0.5)
+=======
+>>>>>>> 5754448a407cb123acecdeee136069145bab607d
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -45,6 +63,7 @@ GEM
     sqlite3 (1.4.1)
     thread_safe (0.3.6)
     tilt (2.0.9)
+<<<<<<< HEAD
     tty-color (0.5.0)
     tty-cursor (0.7.0)
     tty-prompt (0.19.0)
@@ -59,18 +78,32 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     wisper (2.0.0)
+=======
+    tzinfo (1.2.5)
+      thread_safe (~> 0.1)
+    zeitwerk (2.1.10)
+>>>>>>> 5754448a407cb123acecdeee136069145bab607d
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+<<<<<<< HEAD
   activerecord (~> 5.2.3)
+=======
+>>>>>>> 5754448a407cb123acecdeee136069145bab607d
   faker
   pry
   require_all
   sinatra-activerecord
   sqlite3
+<<<<<<< HEAD
   tty-prompt
 
 BUNDLED WITH
    2.0.2
+=======
+
+BUNDLED WITH
+   2.0.1
+>>>>>>> 5754448a407cb123acecdeee136069145bab607d
